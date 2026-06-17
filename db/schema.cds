@@ -30,7 +30,7 @@ entity Products : cuid, managed {
   currency    : Currency;
   stock       : Integer;
   minStock    : Integer;
-  rating      : Decimal(2,1);
+  rating      : Decimal(2,1) default 0.0;
   supplier    : Association to Suppliers;
   category    : Association to Categories;
 }
