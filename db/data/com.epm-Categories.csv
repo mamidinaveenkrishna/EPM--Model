@@ -1,0 +1,9 @@
+ID,name,description,parentCategory_ID
+aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa,Electronics,Electronic items,
+bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb,Office Supplies,Office stationery and supplies,
+cccccccc-cccc-cccc-cccc-cccccccccccc,Hardware,Computer hardware,
+dddddddd-dddd-dddd-dddd-dddddddddddd,Laptops,Laptop products,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee,Accessories,Computer accessories,cccccccc-cccc-cccc-cccc-cccccccccccc
+ffffffff-ffff-ffff-ffff-ffffffffffff,Printers,Printing devices,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+99999999-9999-9999-9999-999999999999,Monitors,Display devices,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+88888888-8888-8888-8888-888888888888,Furniture,Office furniture,bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb

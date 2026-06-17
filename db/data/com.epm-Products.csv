@@ -1,0 +1,13 @@
+ID,name,description,price,currency_code,stock,minStock,rating,supplier_ID,category_ID
+11111111-aaaa-1111-aaaa-111111111111,Dell Latitude 5440,14 inch business laptop,55000,INR,20,5,4.5,11111111-1111-1111-1111-111111111111,dddddddd-dddd-dddd-dddd-dddddddddddd
+22222222-bbbb-2222-bbbb-222222222222,HP ProBook 450,15 inch office laptop,52000,INR,4,5,4.2,11111111-1111-1111-1111-111111111111,dddddddd-dddd-dddd-dddd-dddddddddddd
+33333333-cccc-3333-cccc-333333333333,Wireless Mouse,USB wireless mouse,800,INR,50,10,4.3,33333333-3333-3333-3333-333333333333,eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee
+44444444-dddd-4444-dddd-444444444444,Mechanical Keyboard,RGB mechanical keyboard,2500,INR,8,10,4.1,33333333-3333-3333-3333-333333333333,eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee
+55555555-eeee-5555-eeee-555555555555,Office Chair,Ergonomic office chair,7500,INR,15,5,4.4,22222222-2222-2222-2222-222222222222,88888888-8888-8888-8888-888888888888
+66666666-ffff-6666-ffff-666666666666,HP Laser Printer,All in one printer,12000,INR,6,3,4.0,44444444-4444-4444-4444-444444444444,ffffffff-ffff-ffff-ffff-ffffffffffff
+77777777-1111-7777-1111-777777777777,Notebook A4,A4 ruled notebook,80,INR,100,20,4.6,22222222-2222-2222-2222-222222222222,bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb
+88888888-2222-8888-2222-888888888888,Dell Monitor 24,24 inch LED monitor,9500,INR,3,5,4.5,44444444-4444-4444-4444-444444444444,99999999-9999-9999-9999-999999999999
+99999999-3333-9999-3333-999999999999,Lenovo ThinkPad E14,Business laptop with SSD,62000,INR,12,5,4.7,55555555-5555-5555-5555-555555555555,dddddddd-dddd-dddd-dddd-dddddddddddd
+aaaaaaaa-4444-aaaa-4444-aaaaaaaaaaaa,Logitech Webcam,1080p HD webcam,3200,INR,18,5,4.4,77777777-7777-7777-7777-777777777777,eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee
+bbbbbbbb-5555-bbbb-5555-bbbbbbbbbbbb,Epson Ink Tank Printer,High-volume printer,14500,INR,2,5,4.3,88888888-8888-8888-8888-888888888888,ffffffff-ffff-ffff-ffff-ffffffffffff
+cccccccc-6666-cccc-6666-cccccccccccc,Samsung Monitor 27,27 inch IPS monitor,16500,INR,7,3,4.8,88888888-8888-8888-8888-888888888888,99999999-9999-9999-9999-999999999999

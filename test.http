@@ -1,0 +1,170 @@
+### 1. Get all products - SalesService
+GET http://localhost:4004/odata/v4/sales/Products
+
+
+### 2. Get customers
+GET http://localhost:4004/odata/v4/sales/Customers
+
+
+### 3. Sales Orders with Items expand
+GET http://localhost:4004/odata/v4/sales/SalesOrders?$expand=items
+
+
+### 4. Sales Orders expand customer and items
+GET http://localhost:4004/odata/v4/sales/SalesOrders?$expand=customer,items
+
+
+### 5. Products filter stock less than 10
+GET http://localhost:4004/odata/v4/admin/Products?$filter=stock lt 10
+
+
+### 6. Products order by price descending
+GET http://localhost:4004/odata/v4/admin/Products?$orderby=price desc
+
+
+### 7. Product Catalog report
+GET http://localhost:4004/odata/v4/report/ProductCatalog
+
+
+### 8. Low Stock Alert report
+GET http://localhost:4004/odata/v4/report/LowStockAlert
+
+
+### 9. Order Report
+GET http://localhost:4004/odata/v4/report/OrderReport
+
+
+### 10. Purchase Orders with Items
+GET http://localhost:4004/odata/v4/admin/PurchaseOrders?$expand=items
+
+
+### 11. Deep Insert Sales Order
+POST http://localhost:4004/odata/v4/sales/SalesOrders
+Content-Type: application/json
+
+{
+  "orderNumber": "SO-005",
+  "customer_ID": "c1111111-1111-1111-1111-111111111111",
+  "orderDate": "2026-06-05",
+  "totalAmount": 3300,
+  "taxAmount": 594,
+  "netAmount": 3894,
+  "currency_code": "INR",
+  "status": "Created",
+  "items": [
+    {
+      "product_ID": "p3333333-3333-3333-3333-333333333333",
+      "quantity": 1,
+      "unitPrice": 800,
+      "netAmount": 800
+    },
+    {
+      "product_ID": "p4444444-4444-4444-4444-444444444444",
+      "quantity": 1,
+      "unitPrice": 2500,
+      "netAmount": 2500
+    }
+  ]
+}
+
+### Day 17-Odata Query
+### Products with price greater than 10000
+GET http://localhost:4004/odata/v4/admin/Products?$filter=price gt 10000
+
+### Products with stock less than or equal to minimum stock
+GET http://localhost:4004/odata/v4/admin/Products?$filter=stock le minStock
+
+### Products not equal to category 'Electronics'
+GET http://localhost:4004/odata/v4/admin/Products?$filter=category ne 'Electronics'
+
+### GET price greater than equals to 50000
+GET http://localhost:4004/odata/v4/admin/Products?$filter=price ge 50000
+
+### Check Department is active or not
+GET http://localhost:4004/odata/v4/admin/Suppliers?$filter=isActive eq true
+
+### Date comparison - Orders created after June 1, 2026 
+GET http://localhost:4004/odata/v4/sales/SalesOrders?$filter=orderDate gt 2026-06-01
+
+### UUID comparison - Get product with specific ID
+GET http://localhost:4004/odata/v4/admin/Products?$filter=ID eq 123e4567-e89b-12d3-a456-426614174000
+
+### Null comparison - Get products with no category
+GET http://localhost:4004/odata/v4/admin/Products?$filter=category eq null
+
+### Combining filters - Get products with price greater than 10000 and stock less than 50
+GET http://localhost:4004/odata/v4/admin/Products?$filter=price gt 10000 and stock lt 50
+
+### Parantheses - Get products with price greater than 10000 and (stock less than 50 or category is 'Electronics')
+GET http://localhost:4004/odata/v4/admin/Products?$filter=price gt 10000 and (stock lt 50 or category eq 'Electronics')
+
+### Parantheses - Get products with (price greater than 10000 and stock less than 50) or category is 'Electronics'
+GET http://localhost:4004/odata/v4/admin/Products?$filter=(price gt 10000 and stock lt 50) or category eq 'Electronics'
+
+### // Orders placed in 2026
+GET http://localhost:4004/odata/v4/admin/SalesOrders?$filter=year(orderDate) eq 2026
+
+###  Orders placed in June 2026
+GET http://localhost:4004/odata/v4/sales/SalesOrders?$filter=month(orderDate) eq 6
+
+### $filter=year(orderDate) gt 2000
+GET http://localhost:4004/odata/v4/admin/SalesOrders?$filter=year(orderDate) gt 2000
+
+### $filter=year(orderDate) eq 2026 and month(orderDate) eq 6
+GET http://localhost:4004/odata/v4/sales/SalesOrders?$filter=year(orderDate) eq 2026 and month(orderDate) eq 6
+
+// Filter Expression
+//"Show me all products that cost more than $50" → $filter=price gt 50
+//"Find customers from India" → $filter=country eq 'India'
+//"Get all active employees" → $filter=isActive eq true
+// "Show orders placed after March 2026" → $filter=orderDate gt 2026-03-31
+// "Find books with 'Lord' in the title" → $filter=contains(title, 'Lord')
+// "Products with stock between 10 and 100" → $filter=stock ge 10 and stock le 100
+// "Authors from UK or USA" → $filter=country eq 'UK' or country eq 'USA'
+// "Orders that are NOT delivered and cost over $500" → $filter=not (status eq 'Delivered') and totalAmount gt 500
+
+// Homework- Odata Query
+### 1. All suppliers from Germany with their products
+GET http://localhost:4004/odata/v4/admin/Products?$filter=supplier/country_code eq 'DE'&$expand=supplier
+
+### 2. Top 5 highest-value orders this month
+GET http://localhost:4004/odata/v4/sales/SalesOrders?$filter=orderDate ge 2026-06-01 and orderDate lt 2026-07-01&$orderby=netAmount desc&$top=5
+
+### 3. Products in Electronics category sorted by price
+GET http://localhost:4004/odata/v4/admin/Products?$filter=category/name eq 'Electronics'&$orderby=price asc&$expand=category
+
+### 4. Page 2 of customers, 15 per page, sorted by name
+GET http://localhost:4004/odata/v4/admin/Customers?$orderby=name asc&$top=15&$skip=15
+
+### 5. Orders with status New and amount over 1000, with customer name
+GET http://localhost:4004/odata/v4/sales/SalesOrders?$filter=status eq 'New' and netAmount gt 1000&$expand=customer
+
+### 1 GET Products from suppliers in India with supplier details
+GET http://localhost:4004/odata/v4/admin/Products?$filter=supplier/country_code eq 'IN'&$expand=supplier
+
+### 4 Page 3 of customers, 2 per page, sorted by name
+GET http://localhost:4004/odata/v4/admin/Customers?$orderby=name asc&$top=2&$skip=2
+
+### 5 Orders with status Created and amount over 1000, with customer details
+GET http://localhost:4004/odata/v4/admin/SalesOrders?$filter=status eq 'Created' and netAmount gt 1000&$expand=customer
+
+### 
+POST http://localhost:4004/odata/v4/sales/SalesOrders
+Content-Type: application/json
+
+{
+  
+}
+###
+http://localhost:4004/purchasing/PurchaseOrderItems
+
+####
+http://localhost:4004/purchasing/PurchaseOrders('po111111-1111-1111-1111-111111111111')?$expand=items
+
+
+###
+http://localhost:4004/purchasing/PurchaseOrderItems
+###
+http://localhost:4004/purchasing/$metadata
+####
+http://localhost:4004/purchase/index.html#/Products(11111111-aaaa-1111-aaaa-111111111111)

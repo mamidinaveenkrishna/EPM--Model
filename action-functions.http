@@ -1,0 +1,104 @@
+@base = http://localhost:4004/orders
+
+### Get all orders
+GET {{base}}/Orders
+
+
+### Create a customer
+POST {{base}}/Customers
+Content-Type: application/json
+
+{
+  "name": "Test Customer",
+  "email": "test@example.com",
+  "phone": "9999999999",
+  "city": "Mumbai",
+  "country_code": "IN",
+  "creditLimit": 500000
+}
+
+
+### Create an order
+POST {{base}}/Orders
+Content-Type: application/json
+
+{
+  "orderNumber": "SO-TEST-001",
+  "customer_ID": "d95037c9-30c4-4cf7-a462-f395483f1244",
+  "orderDate": "2026-06-15",
+  "totalAmount": 1500.00,
+  "netAmount": 1271.19,
+  "taxAmount": 228.81,
+  "currency_code": "INR",
+  "status": "New"
+}
+
+
+### Confirm the order
+POST {{base}}/Orders(ID='30f26c7a-b86a-46bd-b57f-50c369e68dae')/OrderService.confirm
+Content-Type: application/json
+
+{}
+
+
+### Try to confirm again should fail
+POST {{base}}/Orders(ID='30f26c7a-b86a-46bd-b57f-50c369e68dae')/OrderService.confirm
+Content-Type: application/json
+
+{}
+
+
+### Ship the order
+POST {{base}}/Orders(ID='30f26c7a-b86a-46bd-b57f-50c369e68dae')/OrderService.ship
+Content-Type: application/json
+
+{
+  "trackingNumber": "TRK-2026-001",
+  "carrier": "BlueDart"
+}
+
+
+### Deliver the order
+POST {{base}}/Orders(ID='30f26c7a-b86a-46bd-b57f-50c369e68dae')/OrderService.deliver
+Content-Type: application/json
+
+{}
+
+
+### Try to cancel a delivered order should fail
+POST {{base}}/Orders(ID='30f26c7a-b86a-46bd-b57f-50c369e68dae')/OrderService.cancel
+Content-Type: application/json
+
+{
+  "reason": "Changed my mind"
+}
+
+
+### Get order total
+GET {{base}}/Orders(ID='s2222222-2222-2222-2222-222222222222')/OrderService.getTotal()
+
+
+### Get order timeline
+GET {{base}}/Orders(ID='s2222222-2222-2222-2222-222222222222')/OrderService.getTimeline()
+
+
+### Bulk confirm multiple orders
+POST {{base}}/bulkConfirm
+Content-Type: application/json
+
+{
+  "orderIds": [
+    "30f26c7a-b86a-46bd-b57f-50c369e68dae",
+    "s2222222-2222-2222-2222-222222222222"
+  ]
+}
+
+### Item tests
+GET http://localhost:4004/orders/Orders?$expand=items
+
+### Get order statistics for June 2026
+GET {{base}}/getOrderStats(year=2026,month=6)
+
+
+### Get top 3 customers by spending
+GET {{base}}/getTopCustomers(limit=3)

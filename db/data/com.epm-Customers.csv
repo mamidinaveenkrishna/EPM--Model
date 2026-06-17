@@ -1,0 +1,9 @@
+ID,name,email,phone,city,country_code,creditLimit
+11111111-abcd-1111-abcd-111111111111,Priya Mohanty,priya@gmail.com,9000000001,Bhubaneswar,IN,100000
+22222222-abcd-2222-abcd-222222222222,Amit Das,amit@gmail.com,9000000002,Cuttack,IN,80000
+33333333-abcd-3333-abcd-333333333333,Neha Singh,neha@gmail.com,9000000003,Kolkata,IN,120000
+44444444-abcd-4444-abcd-444444444444,Rahul Patnaik,rahul@gmail.com,9000000004,Mumbai,IN,90000
+55555555-abcd-5555-abcd-555555555555,Sneha Reddy,sneha@gmail.com,9000000005,Hyderabad,IN,150000
+66666666-abcd-6666-abcd-666666666666,Arjun Kumar,arjun@gmail.com,9000000006,Bangalore,IN,110000
+77777777-abcd-7777-abcd-777777777777,Kavya Sharma,kavya@gmail.com,9000000007,Chennai,IN,95000
+88888888-abcd-8888-abcd-888888888888,Rohan Verma,rohan@gmail.com,9000000008,Pune,IN,130000

@@ -1,0 +1,15 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+
+    <VBox class="sapUiMediumMargin">
+        <Title text="Budget Utilization"/>
+
+        <ProgressIndicator
+            percentValue="{= (${netAmount} / 1500000) * 100 }"
+            displayValue="{= ${netAmount} + ' / 1500000'}"
+            state="Success"
+            width="100%" />
+    </VBox>
+
+</core:FragmentDefinition>
