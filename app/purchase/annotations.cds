@@ -1,3 +1,4 @@
+//Improve product annotations with better labels
 using {PurchasingService} from '../../srv/purchasing-service';
 using from '@sap/cds/common';
 
