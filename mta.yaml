@@ -1,0 +1,215 @@
+_schema-version: 3.3.0
+ID: epm
+description: EPM CAP project with HTML5 Application Repository deployment.
+version: 1.0.0
+
+modules:
+
+  # ── 1. DB Deployer ──────────────────────────────────────────────────────────
+  - name: epm-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: epm-db
+    parameters:
+      buildpack: nodejs_buildpack
+
+  # ── 2. CAP Backend Service ───────────────────────────────────────────────────
+  - name: epm-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: epm-db
+      - name: epm-auth
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+      instances: 1
+    build-parameters:
+      builder: npm-ci
+
+  # ── 3. App Router ────────────────────────────────────────────────────────────
+  - name: epm
+    type: approuter.nodejs
+    path: app/router
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: epm-auth
+      - name: epm-html5-runtime
+      - name: epm-destination-service
+        group: destinations
+        properties:
+          name: ui5
+          url: https://ui5.sap.com
+          forwardAuthToken: false
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+
+  # ── 4. HTML5 UI Module (purchaseorder) ──────────────────────────────────────
+  - name: purchasorder
+    type: html5
+    path: app/purchasorder
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+
+  # ── 5. HTML5 App Content (uploads zip to html5-apps-repo) ───────────────────
+  - name: epm-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: epm-html5-repo-host
+        parameters:
+          content-target: true
+          service-key:
+            name: epm-html5-repo-host-key
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - purchasorder.zip
+          name: purchasorder
+          target-path: resources/
+
+  # ── 6. Destination Content ────────────────────────────────────────────────────
+  # Type and ProxyType are OMITTED from epm-api — these fields are immutable
+  # on existing destinations and will cause "Property [Type] is not editable"
+  # if included in an update. They were set correctly on first creation.
+  - name: epm-destination-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: epm-destination-service
+        parameters:
+          content-target: true
+      - name: epm-html5-repo-host
+        parameters:
+          service-key:
+            name: epm-html5-repo-host-key
+      - name: epm-auth
+        parameters:
+          service-key:
+            name: epm-auth-key
+      - name: srv-api
+    parameters:
+      content:
+        instance:
+          destinations:
+            - Name: epm-html5-repo-host
+              ServiceInstanceName: epm-html5-repo-host
+              ServiceKeyName: epm-html5-repo-host-key
+              sap.cloud.service: epm.service
+            - Authentication: OAuth2UserTokenExchange
+              Name: epm-auth
+              ServiceInstanceName: epm-auth
+              ServiceKeyName: epm-auth-key
+              sap.cloud.service: epm.service
+            - Authentication: OAuth2UserTokenExchange
+              HTML5.DynamicDestination: true
+              Name: epm-management-api
+              # Type: HTTP        ← REMOVED: immutable field, cannot be updated
+              # ProxyType: Internet ← REMOVED: immutable field, cannot be updated
+              TokenServiceInstanceName: epm-auth
+              TokenServiceKeyName: epm-auth-key
+              URL: ~{srv-api/srv-url}
+              WebIDEEnabled: true
+              WebIDEUsage: odata_gen
+              sap.cloud.service: epm.service
+          existing_destinations_policy: update
+    build-parameters:
+      no-source: true
+
+# ── Resources ──────────────────────────────────────────────────────────────────
+
+resources:
+
+  # HANA DB container
+  - name: epm-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
+
+  # XSUAA
+  - name: epm-auth
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: app-api
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: epm-${org}-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          redirect-uris:
+            - https://*~{app-api/app-uri}/**
+
+  # HTML5 App Repository — host
+  - name: epm-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+
+  # HTML5 App Repository — runtime
+  - name: epm-html5-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+
+  # Destination Service
+  # init_data only runs at service CREATION, so update policy here is safe.
+  # Type/ProxyType in init_data are fine because this is a create-only path.
+  - name: epm-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        HTML5Runtime_enabled: true
+        version: 1.0.0
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: update
+
+# ── Global Parameters ──────────────────────────────────────────────────────────
+
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production

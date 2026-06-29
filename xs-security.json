@@ -1,0 +1,56 @@
+{
+  "xsappname": "epm",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Viewer",
+      "description": "View purchase data"
+    },
+    {
+      "name": "$XSAPPNAME.PurchaseManager",
+      "description": "Manage purchase orders"
+    },
+    {
+      "name": "$XSAPPNAME.Administrator",
+      "description": "Full administrative access"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "Viewer",
+      "description": "Read only access",
+      "scope-references": ["$XSAPPNAME.Viewer"]
+    },
+    {
+      "name": "PurchaseManager",
+      "description": "Create and manage purchase orders",
+      "scope-references": ["$XSAPPNAME.Viewer", "$XSAPPNAME.PurchaseManager"]
+    },
+    {
+      "name": "Administrator",
+      "description": "Full access",
+      "scope-references": ["$XSAPPNAME.Viewer", "$XSAPPNAME.PurchaseManager", "$XSAPPNAME.Administrator"]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "EPM-Viewer",
+      "description": "EPM Read only access",
+      "role-template-references": ["$XSAPPNAME.Viewer"]
+    },
+    {
+      "name": "EPM-PurchaseManager",
+      "description": "EPM Purchase Manager access",
+      "role-template-references": ["$XSAPPNAME.PurchaseManager"]
+    },
+    {
+      "name": "EPM-Administrator",
+      "description": "EPM Full access",
+      "role-template-references": ["$XSAPPNAME.Administrator"]
+    }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.cfapps.ap21.hana.ondemand.com/**"]
+  }
+}

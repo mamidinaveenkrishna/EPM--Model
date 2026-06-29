@@ -1,0 +1,37 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/purchasing/(.*)$",
+      "target": "/purchasing/$1",
+      "destination": "epm-management-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/orders/(.*)$",
+      "target": "/orders/$1",
+      "destination": "epm-api",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/odata/v4/admin/(.*)$",
+      "target": "/odata/v4/admin/$1",
+      "destination": "epm-api",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/analytics/(.*)$",
+      "target": "/analytics/$1",
+      "destination": "epm-api",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

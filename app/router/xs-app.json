@@ -1,0 +1,19 @@
+{
+  "welcomeFile": "/purchasorder/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/purchasing/(.*)$",
+      "target": "/purchasing/$1",
+      "destination": "epm-management-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

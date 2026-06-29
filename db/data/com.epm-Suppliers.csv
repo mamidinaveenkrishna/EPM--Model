@@ -1,0 +1,9 @@
+ID,name,contact,email,phone,city,country_code,isActive
+11111111-1111-1111-1111-111111111111,TechSource Pvt Ltd,Rajesh Kumar,rajesh@techsource.com,9876543210,Bhubaneswar,IN,true
+22222222-2222-2222-2222-222222222222,Global Office Supplies,Anita Sharma,anita@globaloffice.com,9876543211,Cuttack,IN,true
+33333333-3333-3333-3333-333333333333,ElectroMart India,Suresh Das,suresh@electromart.com,9876543212,Kolkata,IN,true
+44444444-4444-4444-4444-444444444444,Prime Hardware Co,Meera Patnaik,meera@primehardware.com,9876543213,Delhi,IN,true
+55555555-5555-5555-5555-555555555555,Smart Devices Ltd,Vikram Singh,vikram@smartdevices.com,9876543214,Bangalore,IN,true
+66666666-6666-6666-6666-666666666666,OfficeHub Solutions,Pooja Verma,pooja@officehub.com,9876543215,Hyderabad,IN,true
+77777777-7777-7777-7777-777777777777,Digital World Pvt Ltd,Arjun Reddy,arjun@digitalworld.com,9876543216,Chennai,IN,true
+88888888-8888-8888-8888-888888888888,NextGen Electronics,Karan Malhotra,karan@nextgen.com,9876543217,Pune,IN,true

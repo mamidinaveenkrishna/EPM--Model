@@ -1,0 +1,28 @@
+{
+  "requires": {
+    "auth": {
+      "kind": "mocked",
+      "users": {
+        "*": false,
+        "alice": {
+          "password": "alice",
+          "roles": ["PurchaseManager", "Viewer"],
+          "attr": { "Department": "Engineering" }
+        },
+        "bob": {
+          "password": "bob",
+          "roles": ["PurchaseManager", "Viewer"],
+          "attr": { "Department": "Marketing" }
+        },
+        "carol": {
+          "password": "carol",
+          "roles": ["Viewer"]
+        },
+        "dave": {
+          "password": "dave",
+          "roles": ["Administrator", "PurchaseManager", "Viewer"]
+        }
+      }
+    }
+  }
+}
